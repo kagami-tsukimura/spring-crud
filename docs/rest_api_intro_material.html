@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REST API 入門</title>
+
+<style>
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;
+background:#f6f8fc;
+margin:0;
+padding:30px;
+color:#1f2937;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+}
+
+.card{
+background:white;
+border-radius:14px;
+padding:24px;
+margin-bottom:20px;
+box-shadow:0 6px 18px rgba(0,0,0,0.05);
+}
+
+h1{margin-top:0}
+
+h2{
+margin-top:0;
+margin-bottom:12px;
+}
+
+.highlight{
+background:#eef4ff;
+border:1px solid #c7d8ff;
+padding:14px;
+border-radius:10px;
+margin-top:10px;
+}
+
+.flow{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.step{
+flex:1;
+min-width:200px;
+background:#f8fafc;
+padding:14px;
+border-radius:10px;
+border:1px solid #e5e7eb;
+text-align:center;
+}
+
+.arrow{
+font-size:22px;
+padding-top:22px;
+}
+
+.code{
+background:#111827;
+color:#e5e7eb;
+padding:14px;
+border-radius:10px;
+font-family:monospace;
+white-space:pre;
+overflow:auto;
+}
+
+.table{
+width:100%;
+border-collapse:collapse;
+}
+
+.table th,.table td{
+border:1px solid #e5e7eb;
+padding:10px;
+}
+
+.table th{
+background:#f3f6fc;
+}
+
+.big{
+font-size:18px;
+font-weight:600;
+}
+
+.good{
+background:#ecfdf5;
+border:1px solid #a7f3d0;
+padding:12px;
+border-radius:8px;
+margin-bottom:8px;
+}
+
+.bad{
+background:#fef2f2;
+border:1px solid #fecaca;
+padding:12px;
+border-radius:8px;
+margin-bottom:8px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:12px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+<h1>REST API 入門</h1>
+
+<div class="highlight">
+API → システムの窓口  
+REST → API設計の原則  
+REST API → REST原則に従ったAPI
+</div>
+
+</div>
+
+
+<div class="card">
+<h2>APIとは？</h2>
+
+<div class="big">
+システム同士がやり取りするための窓口
+</div>
+
+<div class="flow">
+<div class="step">フロント</div>
+<div class="arrow">→</div>
+<div class="step">API</div>
+<div class="arrow">→</div>
+<div class="step">DB</div>
+</div>
+
+</div>
+
+
+<div class="card">
+<h2>RESTとは？</h2>
+
+<div class="big">
+リソース指向で設計するAPI原則
+</div>
+
+RESTでは
+
+<ul>
+<li>URLはリソース（名詞）</li>
+<li>HTTPメソッドで操作</li>
+<li>ステートレス</li>
+<li>統一された構造</li>
+</ul>
+
+</div>
+
+
+<div class="card">
+<h2>REST原則</h2>
+
+<div class="grid">
+
+<div class="highlight">
+<b>① リソース指向</b><br>
+URLは名詞で設計
+
+<div class="code">
+/users
+/users/1
+</div>
+
+</div>
+
+<div class="highlight">
+<b>② HTTPメソッドで操作</b>
+
+<div class="code">
+GET /users
+POST /users
+DELETE /users/1
+</div>
+
+</div>
+
+<div class="highlight">
+<b>③ ステートレス</b><br>
+毎回リクエストに必要情報を含める
+
+<div class="code">
+Authorization: Bearer token
+</div>
+
+</div>
+
+<div class="highlight">
+<b>④ 統一インターフェース</b>
+
+<div class="code">
+/users
+/orders
+/products
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+<h2>RESTの例 / RESTでない例</h2>
+
+REST
+
+<div class="good">
+GET /users
+</div>
+
+<div class="good">
+DELETE /users/1
+</div>
+
+RESTでない
+
+<div class="bad">
+GET /getUsers
+</div>
+
+<div class="bad">
+POST /deleteUser
+</div>
+
+</div>
+
+
+<div class="card">
+<h2>REST APIとは</h2>
+
+<div class="big">
+REST原則に従って設計されたAPI
+</div>
+
+<div class="code">
+GET    /users
+GET    /users/1
+POST   /users
+PATCH  /users/1
+DELETE /users/1
+</div>
+
+</div>
+
+
+<div class="card">
+<h2>メリット</h2>
+
+<ul>
+<li>設計が統一される</li>
+<li>フロントとバックエンド分離しやすい</li>
+</ul>
+
+例：フロントとバック分離
+
+<div class="code">
+GET /users
+
+return [
+ { id:1, name:"A" },
+ { id:2, name:"B" }
+]
+</div>
+
+同じAPIを
+
+<ul>
+<li>Web</li>
+<li>スマホ</li>
+<li>バッチ</li>
+</ul>
+
+から利用できる
+
+<br>
+
+例：設計統一
+
+<div class="code">
+GET /users
+GET /orders
+GET /products
+</div>
+
+パターンが統一される
+
+</div>
+
+
+<div class="card">
+<h2>デメリット</h2>
+
+<ul>
+<li>複雑な取得に弱い</li>
+<li>複数API呼び出しが必要になる</li>
+</ul>
+
+例：複雑取得
+
+<div class="code">
+GET /users/1
+GET /users/1/orders
+GET /users/1/profile
+</div>
+
+複数回呼び出しが必要
+
+<br>
+
+専用APIを作る必要がある
+
+<div class="code">
+GET /user-detail/1
+</div>
+
+複雑な取得用にAPIを追加するケースがある
+
+</div>
+
+
+<div class="card">
+<h2>ユースケース</h2>
+
+<ul>
+<li>複雑な取得に弱い</li>
+<li>オーバーフェッチが発生</li>
+<li>API呼び出し増える</li>
+</ul>
+
+</div>
+
+
+<div class="card">
+<h2>ユースケース</h2>
+
+REST向き
+
+<ul>
+<li>CRUD中心システム</li>
+<li>Webアプリ</li>
+<li>スマホAPI</li>
+<li>マイクロサービス</li>
+</ul>
+
+REST不向き
+
+<ul>
+<li>複雑クエリ（GraphQL）</li>
+<li>リアルタイム通信</li>
+<li>ストリーミング</li>
+</ul>
+
+</div>
+
+
+<div class="card">
+<h2>まとめ</h2>
+
+<div class="highlight">
+API = 窓口  
+REST = 設計原則  
+REST API = RESTに従ったAPI
+</div>
+
+</div>
+
+
+</div>
+
+</body>
+</html>

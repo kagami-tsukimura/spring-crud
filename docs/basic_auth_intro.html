@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>認証・認可 / Basic認証 入門</title>
+
+<style>
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;
+background:#f6f8fc;
+margin:0;
+padding:30px;
+color:#1f2937;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+}
+
+.card{
+background:white;
+border-radius:14px;
+padding:24px;
+margin-bottom:20px;
+box-shadow:0 6px 18px rgba(0,0,0,0.05);
+}
+
+h1{margin-top:0}
+
+.highlight{
+background:#eef4ff;
+border:1px solid #c7d8ff;
+padding:14px;
+border-radius:10px;
+margin-top:10px;
+}
+
+.flow{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.step{
+flex:1;
+min-width:200px;
+background:#f8fafc;
+padding:14px;
+border-radius:10px;
+border:1px solid #e5e7eb;
+text-align:center;
+}
+
+.arrow{
+font-size:22px;
+padding-top:22px;
+}
+
+.code{
+background:#111827;
+color:#e5e7eb;
+padding:14px;
+border-radius:10px;
+font-family:monospace;
+white-space:pre;
+overflow:auto;
+}
+
+.table{
+width:100%;
+border-collapse:collapse;
+}
+
+.table th,.table td{
+border:1px solid #e5e7eb;
+padding:10px;
+}
+
+.table th{
+background:#f3f6fc;
+}
+
+.big{
+font-size:18px;
+font-weight:600;
+}
+
+.good{
+background:#ecfdf5;
+border:1px solid #a7f3d0;
+padding:12px;
+border-radius:8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+<h1>認証・認可 / Basic認証</h1>
+
+<div class="highlight">
+認証 → あなたは誰？  
+認可 → 何をしていい？
+</div>
+
+</div>
+
+
+<div class="card">
+<h2>認証とは？</h2>
+
+<div class="big">
+ユーザーが誰かを確認すること
+</div>
+
+例
+
+<div class="flow">
+
+<div class="step">
+ユーザー
+ログイン
+</div>
+
+<div class="arrow">→</div>
+
+<div class="step">
+サーバー
+ユーザー確認
+</div>
+
+<div class="arrow">→</div>
+
+<div class="step">
+認証成功
+</div>
+
+</div>
+
+<br>
+
+例：ログイン
+
+<div class="code">
+username: user
+password: pass
+</div>
+
+</div>
+
+
+<div class="card">
+<h2>認可とは？</h2>
+
+<div class="big">
+そのユーザーが何をしていいかを判断すること
+</div>
+
+例
+
+<div class="flow">
+
+<div class="step">
+ログイン済
+</div>
+
+<div class="arrow">→</div>
+
+<div class="step">
+管理者？
+</div>
+
+<div class="arrow">→</div>
+
+<div class="step">
+OK / NG
+</div>
+
+</div>
+
+例：
+
+<div class="code">
+admin → 削除可能
+user  → 閲覧のみ
+</div>
+
+</div>
+
+
+<div class="card">
+<h2>Basic認証とは？</h2>
+
+<div class="big">
+ユーザー名とパスワードをそのまま送る認証方式
+</div>
+
+</div>
+
+
+<div class="card">
+<h2>Basic認証の流れ</h2>
+
+<div class="flow">
+
+<div class="step">
+リクエスト
+</div>
+
+<div class="arrow">→</div>
+
+<div class="step">
+ユーザー名
+パスワード送信
+</div>
+
+<div class="arrow">→</div>
+
+<div class="step">
+サーバー確認
+</div>
+
+<div class="arrow">→</div>
+
+<div class="step">
+OK / NG
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+<h2>コード例</h2>
+
+HTTPヘッダ
+
+<div class="code">
+Authorization: Basic dXNlcjpwYXNz
+</div>
+
+Base64でエンコードされる
+
+<div class="code">
+user:pass
+↓
+dXNlcjpwYXNz
+</div>
+
+</div>
+
+
+<div class="card">
+<h2>メリット</h2>
+
+<ul>
+<li>実装が簡単</li>
+<li>すぐ使える</li>
+</ul>
+
+例
+
+<div class="code">
+.htpasswd
+user:password
+</div>
+
+</div>
+
+
+<div class="card">
+<h2>デメリット</h2>
+
+<ul>
+<li>毎回パスワード送信</li>
+<li>セキュリティ弱い</li>
+</ul>
+
+<div class="code">
+GET /api
+Authorization: Basic xxx
+</div>
+
+毎回送られる
+
+</div>
+
+
+<div class="card">
+<h2>他の代表的な認証方式（モダン）</h2>
+
+<h3>① Bearer Token（JWT）</h3>
+
+<div class="flow">
+<div class="step">ログイン</div>
+<div class="arrow">→</div>
+<div class="step">Token発行</div>
+<div class="arrow">→</div>
+<div class="step">API呼び出し</div>
+</div>
+
+例
+
+<div class="code">
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+</div>
+
+特徴
+
+<ul>
+<li>REST APIと相性が良い</li>
+<li>ステートレス</li>
+<li>モダンなWebアプリで多い</li>
+</ul>
+
+
+<h3>② OAuth2 / OpenID Connect</h3>
+
+Googleログインなど
+
+<div class="flow">
+<div class="step">アプリ</div>
+<div class="arrow">→</div>
+<div class="step">ログインプロバイダ</div>
+<div class="arrow">→</div>
+<div class="step">Token取得</div>
+</div>
+
+例
+
+<ul>
+<li>Googleログイン</li>
+<li>Microsoftログイン</li>
+<li>GitHubログイン</li>
+</ul>
+
+
+<h3>Cognito の場合</h3>
+
+Cognitoはこの流れで使う
+
+<div class="flow">
+<div class="step">フロント</div>
+<div class="arrow">→</div>
+<div class="step">Cognitoログイン</div>
+<div class="arrow">→</div>
+<div class="step">JWT取得</div>
+<div class="arrow">→</div>
+<div class="step">REST API</div>
+</div>
+
+例
+
+<div class="code">
+Authorization: Bearer JWT_TOKEN
+</div>
+
+用途
+
+<ul>
+<li>Webアプリ</li>
+<li>SPA</li>
+<li>API認証</li>
+</ul>
+
+</div>
+
+
+<div class="card">
+<h2>ユースケース</h2>
+
+<ul>
+<li>社内ツール</li>
+<li>検証環境</li>
+<li>簡易API保護</li>
+</ul>
+
+</div>
+
+
+<div class="card">
+<h2>まとめ</h2>
+
+<div class="highlight">
+認証 = 誰か確認  
+認可 = 何ができるか  
+Basic認証 = ユーザー名パスワード送信
+</div>
+
+</div>
+
+
+</div>
+
+</body>
+</html>
